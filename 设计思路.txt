@@ -1,0 +1,13 @@
+
+总体架构：一个master + n个worker
+			master：
+				code: oj_daemon.c
+				master fork 一个worker进程池
+				master 负责作业分发，从数据库获取未评测任务，并均衡分发到worker进程
+			worker：
+				code: judge_dev.c
+				负责评测任务，过程如下：
+				1. 编码用户代码；
+				2. 生成用户实例子进程执行用户代码
+				3. 评测进程通过wait+ptrace跟踪调试用户实例进程，并通过getrlimit收集用户实例进程时间（用户态+内核态）和内存使用情况；
+				4. 对比用户实例进程输出的数据

@@ -1,0 +1,2 @@
+1. make makefile 生成oj_daemon
+2. 启动：./daemon_oj
